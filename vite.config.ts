@@ -49,6 +49,10 @@ export default defineConfig(() => {
         workbox: {
           maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          // The root service worker must NOT hijack navigations to project
+          // subpaths (e.g. /asha-vaccination-app/, /tb-request-form/) —
+          // otherwise those apps open as Arogya Sevak from cache.
+          navigateFallbackDenylist: [/^\/./],
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
