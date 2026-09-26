@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-up: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-fade-in: fade-in 0.35s ease-out backwards;
+  --animate-scale-in: scale-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-pop: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-rise: rise 16s linear infinite;
+  --animate-spin-slow: spin-slow 16s linear infinite;
+  --animate-glow-pulse: glow-pulse 3.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-wave: wave-slide 20s linear infinite;
+  --animate-ecg: ecg-travel 4.5s linear infinite;
+  --animate-ecg-draw: ecg-draw 2.4s linear infinite;
+  --animate-icon-bob: icon-bob 6s ease-in-out infinite;
+  --animate-heart-thump: heart-thump 2.4s ease-in-out infinite;
+  --animate-heart-glow: heart-glow 2.4s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  @keyframes pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    70% {
+      transform: scale(1.05);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  /* Live background: slow drifting colour blobs */
+  @keyframes drift {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(6vw, -4vh) scale(1.15);
+    }
+    100% {
+      transform: translate(-5vw, 5vh) scale(0.94);
+    }
+  }
+  /* Live background: medical icons gently rising like bubbles */
+  @keyframes rise {
+    0% {
+      opacity: 0;
+      transform: translateY(12vh) rotate(-10deg);
+    }
+    12% {
+      opacity: 0.55;
+    }
+    82% {
+      opacity: 0.35;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-108vh) rotate(12deg);
+    }
+  }
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.14);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      transform: translateX(-160%) skewX(-20deg);
+    }
+    to {
+      transform: translateX(280%) skewX(-20deg);
+    }
+  }
+  @keyframes wave-slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* Header मधील ECG हार्टबीट लाईन: चमकदार स्पंदन डावीकडून उजवीकडे सरकते */
+  @keyframes ecg-travel {
+    to {
+      stroke-dashoffset: -1200;
+    }
+  }
+  /* Header मधील मिनी icons: हलके वर-खाली + झुलणे — जिवंत वाटावे म्हणून */
+  @keyframes icon-bob {
+    0%, 100% {
+      transform: translateY(0) rotate(-7deg) scale(1);
+    }
+    50% {
+      transform: translateY(-9px) rotate(7deg) scale(1.12);
+    }
+  }
+  /* ECG लाईन पूर्ण डावीकडून उजवीकडे draw होते (मॉनिटरसारखी), मग fade होऊन परत */
+  @keyframes ecg-draw {
+    0% {
+      stroke-dashoffset: 100;
+      opacity: 1;
+    }
+    55% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    70% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    92%, 100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+  /* हृदयाचा ठोका — draw होणारी लाईन हृदयावर येताच thump (lub-dub) */
+  @keyframes heart-thump {
+    0%, 16% {
+      transform: scale(1);
+    }
+    22% {
+      transform: scale(1.22);
+    }
+    30% {
+      transform: scale(1);
+    }
+    38% {
+      transform: scale(1.1);
+    }
+    46%, 100% {
+      transform: scale(1);
+    }
+  }
+  /* हृदयाभोवतीची चमक ठोक्यासोबत */
+  @keyframes heart-glow {
+    0%, 16% {
+      opacity: 0.22;
+    }
+    22% {
+      opacity: 0.5;
+    }
+    30% {
+      opacity: 0.22;
+    }
+    38% {
+      opacity: 0.38;
+    }
+    46%, 100% {
+      opacity: 0.22;
+    }
+  }
+}
+
+/* Tactile press feedback for key buttons */
+.pressable {
+  transition: transform 0.16s ease;
+}
+.pressable:active {
+  transform: scale(0.96);
+}
+
+/* Soft entrance for the whole app shell */
+.app-shell {
+  animation: fade-in 0.45s ease-out backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  header,
+  nav,
+  .print\:hidden,
+  #whatsapp-summary-modal-backdrop {
+    display: none !important;
+  }
+  #printable-report {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  th,
+  td {
+    border: 1px solid #cbd5e1 !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
